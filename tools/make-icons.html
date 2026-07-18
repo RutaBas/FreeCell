@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>icon maker</title></head>
+<body style="background:#222;color:#eee;font-family:sans-serif">
+<div id="status">loading…</div>
+<div id="preview"></div>
+<script>
+const SIZES = [180, 192, 512];
+const img = new Image();
+img.crossOrigin = 'anonymous';
+img.onload = () => {
+  const out = {};
+  for (const S of SIZES) {
+    const cv = document.createElement('canvas');
+    cv.width = cv.height = S;
+    const ctx = cv.getContext('2d');
+    // felt background (matches theme_color)
+    const grad = ctx.createRadialGradient(S * 0.5, S * 0.42, S * 0.1, S * 0.5, S * 0.5, S * 0.72);
+    grad.addColorStop(0, '#1a4a38');
+    grad.addColorStop(0.55, '#123528');
+    grad.addColorStop(1, '#0d2820');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, S, S);
+    // vault emblem, centered, ~84%
+    const d = S * 0.84;
+    ctx.drawImage(img, (S - d) / 2, (S - d) / 2, d, d);
+    out[S] = cv.toDataURL('image/png');
+    const p = new Image(); p.src = out[S]; p.width = Math.min(120, S);
+    p.style.margin = '6px'; p.style.background = '#000'; document.getElementById('preview').appendChild(p);
+  }
+  window.ICONS = out;
+  document.getElementById('status').textContent = 'ICONS_READY';
+  document.title = 'ICONS_READY';
+};
+img.onerror = () => { document.getElementById('status').textContent = 'ERROR loading vault.png'; };
+img.src = '../vault.png';
+</script>
+</body></html>

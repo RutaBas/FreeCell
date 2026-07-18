@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>FreeCell · The Vault</title>
+<meta name="theme-color" content="#123528">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="The Vault">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============================ START SCREEN ============================ -->
+<section id="startScreen" class="screen">
+  <div class="start-inner">
+    <img id="emblem" class="emblem" src="vault-emblem.png" alt="Vault emblem" draggable="false">
+    <h1 class="title">FreeCell</h1>
+    <div class="subtitle">The Vault</div>
+
+    <button id="continueBtn" class="continue" hidden>
+      <span class="c-l"><span class="c-k">Continue</span><span id="continueDesc" class="c-v">—</span></span>
+      <span class="c-go">▶</span>
+    </button>
+
+    <div id="tierList" class="tiers"><!-- tiers injected by app.js --></div>
+
+    <div class="start-foot">
+      <button id="statsBtn" class="ghost-btn">Stats</button>
+      <button id="settingsBtn" class="ghost-btn">Settings</button>
+    </div>
+    <div class="footnote">Pick a vault to crack · your best time is engraved on each</div>
+  </div>
+</section>
+
+<!-- ============================ GAME SCREEN ============================ -->
+<section id="gameScreen" class="screen" hidden>
+  <header class="hud">
+    <button id="backBtn" class="ico" title="Menu" aria-label="Menu">‹</button>
+    <div class="hud-mid">
+      <div id="hudTier" class="hud-tier">Vault</div>
+      <div class="hud-stats"><span id="hudTime">0:00</span><span class="dotsep">·</span><span id="hudMoves">0 moves</span></div>
+    </div>
+    <div class="hud-right">
+      <button id="undoBtn" class="ico" title="Undo" aria-label="Undo" disabled>↶</button>
+      <button id="menuBtn" class="ico" title="More" aria-label="More">⋯</button>
+    </div>
+  </header>
+
+  <div id="boardWrap">
+    <div id="board"><!-- slots + cards positioned by app.js --></div>
+  </div>
+
+  <div class="actionbar">
+    <button id="autoBtn" class="act">⤴ Auto</button>
+    <button id="hintBtn" class="act">Hint</button>
+    <button id="newDealBtn" class="act">New deal</button>
+    <button id="restartBtn" class="act">Restart</button>
+  </div>
+
+  <canvas id="winCanvas"></canvas>
+  <div id="winBanner" class="winbanner" hidden>
+    <div class="wb-big">Vault Cracked</div>
+    <div id="wbSub" class="wb-sub">Vault · 0:00</div>
+    <div id="wbRecord" class="wb-rec" hidden>★ New vault record</div>
+    <button id="wbContinue" class="wb-btn">Back to vaults</button>
+  </div>
+</section>
+
+<!-- ============================ MENU SHEET ============================ -->
+<div id="sheet" class="sheet" hidden>
+  <div class="sheet-card" id="sheetCard">
+    <div class="sheet-handle"></div>
+    <div id="sheetBody"></div>
+    <button id="sheetClose" class="sheet-close">Close</button>
+  </div>
+</div>
+
+<!-- toast -->
+<div id="toast" class="toast" hidden></div>
+
+<script src="game.js"></script>
+<script src="solver.js"></script>
+<script src="deals.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
