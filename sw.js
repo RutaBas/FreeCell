@@ -1,6 +1,6 @@
 /* sw.js — offline app shell for FreeCell "The Vault".
  * Cache-first. Bump CACHE_NAME on every deploy or updates won't show. */
-const CACHE_NAME = 'vault-v3';
+const CACHE_NAME = 'vault-v4';
 const ASSETS = [
   '.', 'index.html', 'style.css',
   'game.js', 'solver.js', 'deals.js', 'app.js',

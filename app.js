@@ -352,8 +352,11 @@
     // no selection: select source
     if (here.loc === 'col') {
       const s = trySelectColumnRun(here.idx, here.depth);
-      if (!s) { sfx.invalid(); shakeCards(new Set([c])); buzz(30); return; }
-      // enforce that the run can actually move somewhere size-wise later; select anyway
+      if (!s) {
+        sfx.invalid(); shakeCards(new Set([c])); buzz(30);
+        toast('Move the cards on top of it first');
+        return;
+      }
       sel = s; sfx.pickup(); refreshSelClasses(); render();
     } else if (here.loc === 'free') {
       sel = { fromType: 'free', fromIdx: here.idx, n: 1, cards: new Set([c]), grab: c };
@@ -410,6 +413,15 @@
       autosave();
       afterMove();
       return true;
+    }
+    // explain a blocked move instead of a silent shake
+    if (dest.toType === 'col') {
+      const s = game.state;
+      const toEmpty = s.cols[dest.toIdx].length === 0;
+      const cap = maxSupermove(countEmptyFree(s), countEmptyCols(s), toEmpty);
+      if (src.n > cap) {
+        toast(`Can only move ${cap} card${cap === 1 ? '' : 's'} at once — free a cell or an empty column`);
+      }
     }
     invalidFeedback(cards);
     return false;
